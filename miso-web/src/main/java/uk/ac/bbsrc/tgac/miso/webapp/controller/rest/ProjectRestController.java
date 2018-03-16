@@ -89,7 +89,7 @@ public class ProjectRestController extends RestController {
     this.poolService = poolService;
   }
 
-  public void setRunService(RunService RunService) {
+  public void setRunService(RunService runService) {
     this.runService = runService;
   }
 
