@@ -1477,6 +1477,10 @@ public class Dtos {
   }
 
   public static RunDto asDto(Run from) {
+    return asDto(from, false, false);
+  }
+
+  public static RunDto asDto(Run from, boolean includeContainers, boolean includeContainerPartitions) {
     RunDto dto = new RunDto();
     dto.setId(from.getId());
     dto.setName(from.getName());
@@ -1509,6 +1513,11 @@ public class Dtos {
       dto.setParameters(parametersDto);
     }
     dto.setProgress(from.getProgress());
+
+    if (includeContainers) {
+      dto.setContainers(asContainerDtos(from.getSequencerPartitionContainers(), includeContainerPartitions));
+    }
+
     return dto;
   }
 
@@ -1521,6 +1530,10 @@ public class Dtos {
   }
 
   public static ContainerDto asDto(SequencerPartitionContainer from) {
+    return asDto(from, false);
+  }
+
+  public static ContainerDto asDto(SequencerPartitionContainer from, boolean includePartitions) {
     ContainerDto dto = new ContainerDto();
     dto.setId(from.getId());
     dto.setIdentificationBarcode(from.getIdentificationBarcode());
@@ -1541,13 +1554,29 @@ public class Dtos {
     if (from.getMultiplexingKit() != null) {
       dto.setMultiplexingKit(asDto(from.getMultiplexingKit()));
     }
+    
+    if (includePartitions) {
+      dto.setPartitions(asPartitionDtos(from.getPartitions()));
+    }
     return dto;
   }
 
   public static List<ContainerDto> asContainerDtos(Collection<SequencerPartitionContainer> containerSubset) {
+    return asContainerDtos(containerSubset, false);
+  }
+
+  public static List<ContainerDto> asContainerDtos(Collection<SequencerPartitionContainer> containerSubset, boolean includeContainerPartitions) {
     List<ContainerDto> dtoList = new ArrayList<>();
     for (SequencerPartitionContainer container : containerSubset) {
-      dtoList.add(asDto(container));
+      dtoList.add(asDto(container, includeContainerPartitions));
+    }
+    return dtoList;
+  }
+
+  public static List<PartitionDto> asPartitionDtos(Collection<Partition> partitionSubset) {
+    List<PartitionDto> dtoList = new ArrayList<>();
+    for (Partition partition : partitionSubset) {
+      dtoList.add(asDto(partition));
     }
     return dtoList;
   }

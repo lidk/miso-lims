@@ -151,6 +151,15 @@ public class RunRestController extends RestController {
     return Dtos.asDto(r);
   }
 
+  @RequestMapping(value = "{runId}/full", method = RequestMethod.GET, produces = "application/json")
+  public @ResponseBody RunDto getRunByIdFull(@PathVariable Long runId) throws IOException {
+    Run r = runService.get(runId);
+    if (r == null) {
+      throw new RestException("No run found with ID: " + runId, Status.NOT_FOUND);
+    }
+    return Dtos.asDto(r, true, true);
+  }
+
   @RequestMapping(value = "{runId}/containers", method = RequestMethod.GET, produces = "application/json")
   public @ResponseBody List<ContainerDto> getContainersByRunId(@PathVariable Long runId) throws IOException {
     Collection<SequencerPartitionContainer> cc = containerService.listByRunId(runId);
