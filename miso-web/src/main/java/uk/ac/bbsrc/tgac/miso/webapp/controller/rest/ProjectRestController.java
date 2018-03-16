@@ -67,6 +67,8 @@ public class ProjectRestController extends RestController {
   @Autowired
   private LibraryService libraryService;
   @Autowired
+  private PoolService poolService;
+  @Autowired
   private RunService runService;
   @Autowired
   private SampleGroupService sampleGroupService;
@@ -75,8 +77,20 @@ public class ProjectRestController extends RestController {
     this.projectService = projectService;
   }
 
+  public void setSampleService(SampleService sampleService) {
+    this.sampleService = sampleService;
+  }
+
   public void setLibraryService(LibraryService libraryService) {
     this.libraryService = libraryService;
+  }
+
+  public void setPoolService(PoolService poolService) {
+    this.poolService = poolService;
+  }
+
+  public void setRunService(RunService RunService) {
+    this.runService = runService;
   }
 
   @RequestMapping(value = "/alias/{projectAlias}", method = RequestMethod.GET, produces = "application/json")
@@ -113,6 +127,12 @@ public class ProjectRestController extends RestController {
   public @ResponseBody List<LibraryDto> getProjectLibraries(@PathVariable Long projectId) throws IOException {
     Collection<Library> lp = libraryService.listByProjectId(projectId);
     return Dtos.asLibraryDtos(lp);
+  }
+
+  @RequestMapping(value = "{projectId}/pools", method = RequestMethod.GET, produces = "application/json")
+  public @ResponseBody List<PoolDto> getProjectPools(@PathVariable Long projectId) throws IOException {
+    Collection<Pool> pp = poolService.listByProjectId(projectId);
+    return Dtos.asPoolDtos(pp, true);
   }
 
   @RequestMapping(value = "{projectId}/runs", method = RequestMethod.GET, produces = "application/json")
