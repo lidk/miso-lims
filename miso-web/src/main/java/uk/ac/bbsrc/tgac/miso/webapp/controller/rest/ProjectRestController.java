@@ -43,15 +43,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import uk.ac.bbsrc.tgac.miso.core.data.Library;
-import uk.ac.bbsrc.tgac.miso.core.data.Project;
-import uk.ac.bbsrc.tgac.miso.core.data.SampleGroupId;
-import uk.ac.bbsrc.tgac.miso.dto.Dtos;
-import uk.ac.bbsrc.tgac.miso.dto.LibraryDto;
-import uk.ac.bbsrc.tgac.miso.dto.ProjectDto;
-import uk.ac.bbsrc.tgac.miso.service.LibraryService;
-import uk.ac.bbsrc.tgac.miso.service.ProjectService;
-import uk.ac.bbsrc.tgac.miso.service.SampleGroupService;
+import uk.ac.bbsrc.tgac.miso.core.data.*;
+import uk.ac.bbsrc.tgac.miso.dto.*;
+import uk.ac.bbsrc.tgac.miso.service.*;
 
 /**
  * A controller to handle all REST requests for Projects
@@ -69,7 +63,11 @@ public class ProjectRestController extends RestController {
   @Autowired
   private ProjectService projectService;
   @Autowired
+  private SampleService sampleService;
+  @Autowired
   private LibraryService libraryService;
+  @Autowired
+  private RunService runService;
   @Autowired
   private SampleGroupService sampleGroupService;
 
@@ -99,10 +97,28 @@ public class ProjectRestController extends RestController {
     return Dtos.asDto(project);
   }
 
+  @RequestMapping(value = "{projectId}/samples", method = RequestMethod.GET, produces = "application/json")
+  public @ResponseBody List<SampleDto> getProjectSamples(@PathVariable Long projectId) throws IOException {
+    Collection<Sample> sp = sampleService.listByProjectId(projectId);
+    return Dtos.asSampleDtos(sp, false);
+  }
+
+  @RequestMapping(value = "{projectId}/samples/full", method = RequestMethod.GET, produces = "application/json")
+  public @ResponseBody List<SampleDto> getProjectSamplesFull(@PathVariable Long projectId) throws IOException {
+    Collection<Sample> sp = sampleService.listByProjectId(projectId);
+    return Dtos.asSampleDtos(sp, true);
+  }
+
   @RequestMapping(value = "{projectId}/libraries", method = RequestMethod.GET, produces = "application/json")
   public @ResponseBody List<LibraryDto> getProjectLibraries(@PathVariable Long projectId) throws IOException {
     Collection<Library> lp = libraryService.listByProjectId(projectId);
     return Dtos.asLibraryDtos(lp);
+  }
+
+  @RequestMapping(value = "{projectId}/runs", method = RequestMethod.GET, produces = "application/json")
+  public @ResponseBody List<RunDto> getProjectRuns(@PathVariable Long projectId) throws IOException {
+    Collection<Run> rp = runService.listByProjectId(projectId);
+    return Dtos.asRunDtos(rp);
   }
 
   @RequestMapping(method = RequestMethod.GET, produces = "application/json")

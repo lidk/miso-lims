@@ -143,23 +143,21 @@ public class RunRestController extends RestController {
   }
 
   @RequestMapping(value = "{runId}", method = RequestMethod.GET, produces = "application/json")
-  public @ResponseBody String getRunById(@PathVariable Long runId) throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
+  public @ResponseBody RunDto getRunById(@PathVariable Long runId) throws IOException {
     Run r = runService.get(runId);
     if (r == null) {
       throw new RestException("No run found with ID: " + runId, Status.NOT_FOUND);
     }
-    return mapper.writeValueAsString(r);
+    return Dtos.asDto(r);
   }
 
   @RequestMapping(value = "/alias/{runAlias}", method = RequestMethod.GET, produces = "application/json")
-  public @ResponseBody String getRunByAlias(@PathVariable String runAlias) throws IOException {
-    ObjectMapper mapper = new ObjectMapper();
+  public @ResponseBody RunDto getRunByAlias(@PathVariable String runAlias) throws IOException {
     Run r = runService.getRunByAlias(runAlias);
     if (r == null) {
       throw new RestException("No run found with alias: " + runAlias, Status.NOT_FOUND);
     }
-    return mapper.writeValueAsString(r);
+    return Dtos.asDto(r);
   }
 
   @RequestMapping(value = "/{runId}/samplesheet", method = RequestMethod.GET)
@@ -205,10 +203,9 @@ public class RunRestController extends RestController {
   }
 
   @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-  public @ResponseBody String listAllRuns() throws IOException {
+  public @ResponseBody List<RunDto> listAllRuns() throws IOException {
     Collection<Run> lr = runService.list();
-    ObjectMapper mapper = new ObjectMapper();
-    return mapper.writeValueAsString(lr);
+    return Dtos.asRunDtos(lr);
   }
 
   @RequestMapping(value = "/dt", method = RequestMethod.GET, produces = "application/json")
