@@ -157,7 +157,7 @@ public class RunRestController extends RestController {
     if (r == null) {
       throw new RestException("No run found with ID: " + runId, Status.NOT_FOUND);
     }
-    return Dtos.asDto(r, true, true);
+    return Dtos.asDto(r, true, true, true);
   }
 
   @RequestMapping(value = "{runId}/containers", method = RequestMethod.GET, produces = "application/json")

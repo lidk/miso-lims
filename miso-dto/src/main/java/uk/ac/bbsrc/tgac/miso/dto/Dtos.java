@@ -1477,10 +1477,10 @@ public class Dtos {
   }
 
   public static RunDto asDto(Run from) {
-    return asDto(from, false, false);
+    return asDto(from, false, false, false);
   }
 
-  public static RunDto asDto(Run from, boolean includeContainers, boolean includeContainerPartitions) {
+  public static RunDto asDto(Run from, boolean includeContainers, boolean includeContainerPartitions, boolean includePoolContents) {
     RunDto dto = new RunDto();
     dto.setId(from.getId());
     dto.setName(from.getName());
@@ -1515,7 +1515,7 @@ public class Dtos {
     dto.setProgress(from.getProgress());
 
     if (includeContainers) {
-      dto.setContainers(asContainerDtos(from.getSequencerPartitionContainers(), includeContainerPartitions));
+      dto.setContainers(asContainerDtos(from.getSequencerPartitionContainers(), includeContainerPartitions, includePoolContents));
     }
 
     return dto;
@@ -1530,10 +1530,10 @@ public class Dtos {
   }
 
   public static ContainerDto asDto(SequencerPartitionContainer from) {
-    return asDto(from, false);
+    return asDto(from, false, false);
   }
 
-  public static ContainerDto asDto(SequencerPartitionContainer from, boolean includePartitions) {
+  public static ContainerDto asDto(SequencerPartitionContainer from, boolean includePartitions, boolean includePoolContents) {
     ContainerDto dto = new ContainerDto();
     dto.setId(from.getId());
     dto.setIdentificationBarcode(from.getIdentificationBarcode());
@@ -1556,27 +1556,27 @@ public class Dtos {
     }
     
     if (includePartitions) {
-      dto.setPartitions(asPartitionDtos(from.getPartitions()));
+      dto.setPartitions(asPartitionDtos(from.getPartitions(), includePoolContents));
     }
     return dto;
   }
 
   public static List<ContainerDto> asContainerDtos(Collection<SequencerPartitionContainer> containerSubset) {
-    return asContainerDtos(containerSubset, false);
+    return asContainerDtos(containerSubset, false, false);
   }
 
-  public static List<ContainerDto> asContainerDtos(Collection<SequencerPartitionContainer> containerSubset, boolean includeContainerPartitions) {
+  public static List<ContainerDto> asContainerDtos(Collection<SequencerPartitionContainer> containerSubset, boolean includeContainerPartitions, boolean includePoolContents) {
     List<ContainerDto> dtoList = new ArrayList<>();
     for (SequencerPartitionContainer container : containerSubset) {
-      dtoList.add(asDto(container, includeContainerPartitions));
+      dtoList.add(asDto(container, includeContainerPartitions, includePoolContents));
     }
     return dtoList;
   }
 
-  public static List<PartitionDto> asPartitionDtos(Collection<Partition> partitionSubset) {
+  public static List<PartitionDto> asPartitionDtos(Collection<Partition> partitionSubset, boolean includePoolContents) {
     List<PartitionDto> dtoList = new ArrayList<>();
     for (Partition partition : partitionSubset) {
-      dtoList.add(asDto(partition));
+      dtoList.add(asDto(partition, includePoolContents));
     }
     return dtoList;
   }
@@ -2004,12 +2004,16 @@ public class Dtos {
   }
 
   public static PartitionDto asDto(Partition from) {
+    return asDto(from, false);
+  }
+
+  public static PartitionDto asDto(Partition from, boolean includePoolContents) {
     PartitionDto dto = new PartitionDto();
     dto.setId(from.getId());
     dto.setContainerId(from.getSequencerPartitionContainer().getId());
     dto.setContainerName(from.getSequencerPartitionContainer().getIdentificationBarcode());
     dto.setPartitionNumber(from.getPartitionNumber());
-    dto.setPool(from.getPool() == null ? null : asDto(from.getPool(), false));
+    dto.setPool(from.getPool() == null ? null : asDto(from.getPool(), includePoolContents));
     return dto;
   }
 
