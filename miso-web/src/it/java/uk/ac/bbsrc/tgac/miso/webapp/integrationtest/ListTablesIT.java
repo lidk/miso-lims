@@ -165,12 +165,6 @@ public class ListTablesIT extends AbstractIT {
 
   private static final Set<String> studiesQueries = concatSets(Sets.newHashSet("STU1"), modifier);
 
-  private static final Set<String> experimentsQueries = concatSets(
-      Sets.newHashSet("Expt"), createdDates, createdOnDates, creator, modifier);
-
-  private static final Set<String> submissionsQueries = concatSets(
-      Sets.newHashSet("Sub"), createdDates, createdOnDates, creator, modifier);
-
   private static final Set<String> arrayQueries = Sets.newHashSet("Array");
 
   private static final Set<String> arrayRunQueries = Sets.newHashSet("ArrayRun");

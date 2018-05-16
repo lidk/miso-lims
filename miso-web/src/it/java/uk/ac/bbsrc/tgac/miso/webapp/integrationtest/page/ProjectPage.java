@@ -59,8 +59,7 @@ public class ProjectPage extends HeaderFooterPage {
   @FindBy(id = "save")
   private WebElement saveButton;
 
-  @FindBy(className = "parsley-error")
-  List<WebElement> errors;
+  private List<WebElement> errors;
 
   public ProjectPage(WebDriver driver) {
     super(driver);
@@ -137,6 +136,7 @@ public class ProjectPage extends HeaderFooterPage {
   }
 
   public List<WebElement> getVisibleErrors() {
+    errors = getDriver().findElements(By.className("parsley-error"));
     return errors.stream().filter(error -> error.isDisplayed() && !LimsUtils.isStringEmptyOrNull(error.getText()))
         .collect(Collectors.toList());
   }
