@@ -13,6 +13,9 @@ Changes:
  * Filter container models by platform in create dialog
  * Create a second variant of Zebra JTT-7 label
  * Change reads/cluster terminology in Illumina summary
+    * Removed “cluster” entry that was not calculated correctly.
+    * Renamed “total reads” to “clusters”, which is the sum cluster count across all lanes.
+    * Added “clusters PF” for sum clusters passing filter across all lanes.
  * Allow index families to have fake sequences 
  * Add a second THT-155-590 label
  * Add (near-) duplicate indices and low quality libraries warnings to orders pages
