@@ -18,9 +18,12 @@ elif [ "$JOB" = "BULK_WEB_IT" ]; then
 elif [ "$JOB" = "ENTITY_PAGE_IT" ]; then
     cd miso-web
     mvn -P external clean verify -DskipUTs=true -DskipITs=false -Dit.test='*Page*'
+elif [ "$JOB" = "LIST_TABLES_IT" ]; then
+    cd miso-web
+    mvn -P external clean verify -DskipUTs=true -DskipITs=false -Dit.test='ListTablesIT'
 elif [ "$JOB" = "OTHER_WEB_IT" ]; then
     cd miso-web
-    mvn -P external clean verify -DskipUTs=true -DskipITs=false -Dit.test='!PlainSampleITs, !Bulk*, !*Page*'
+    mvn -P external clean verify -DskipUTs=true -DskipITs=false -Dit.test='!PlainSampleITs, !Bulk*, !*Page*, !ListTablesIT'
 elif [ "$JOB" = "RUNSCANNER_TEST" ]; then
     pushd runscanner-illumina && ./build-illumina-interop && autoreconf -i && ./configure && make && popd;
     cd runscanner
