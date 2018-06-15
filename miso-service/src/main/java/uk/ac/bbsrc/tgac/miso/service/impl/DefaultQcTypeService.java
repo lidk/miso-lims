@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import uk.ac.bbsrc.tgac.miso.core.data.type.QcType;
 import uk.ac.bbsrc.tgac.miso.core.store.QualityControlTypeStore;
+import uk.ac.bbsrc.tgac.miso.core.util.LimsUtils;
 import uk.ac.bbsrc.tgac.miso.service.QcTypeService;
 import uk.ac.bbsrc.tgac.miso.service.security.AuthorizationManager;
 
@@ -37,9 +38,9 @@ public class DefaultQcTypeService implements QcTypeService {
     authorizationManager.throwIfNonAdmin();
     QcType updatedQcType = get(qcType.getId());
     updatedQcType.setName(qcType.getName());
-    updatedQcType.setDescription(qcType.getDescription() == null ? "" : qcType.getDescription());
+    updatedQcType.setDescription(LimsUtils.isStringBlankOrNull(qcType.getDescription()) ? "" : qcType.getDescription());
     updatedQcType.setQcTarget(qcType.getQcTarget());
-    updatedQcType.setUnits(qcType.getUnits() == null ? "" : qcType.getUnits());
+    updatedQcType.setUnits(LimsUtils.isStringBlankOrNull(qcType.getUnits()) ? "" : qcType.getUnits());
     updatedQcType.setPrecisionAfterDecimal(qcType.getPrecisionAfterDecimal());
     qcTypeStore.update(updatedQcType);
   }

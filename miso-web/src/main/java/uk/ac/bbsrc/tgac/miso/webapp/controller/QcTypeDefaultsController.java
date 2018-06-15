@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import uk.ac.bbsrc.tgac.miso.core.data.type.QcType;
 import uk.ac.bbsrc.tgac.miso.dto.Dtos;
 import uk.ac.bbsrc.tgac.miso.dto.QcTypeDto;
@@ -58,12 +55,6 @@ public class QcTypeDefaultsController extends AbstractInstituteDefaultsControlle
   @Override
   protected String getType() {
     return "qctype";
-  }
-
-  @Override
-  protected void writeConfiguration(ObjectMapper mapper, ObjectNode config) throws IOException {
-    super.writeConfiguration(mapper, config);
-    config.putPOJO("qcTargets", qcService.listQcTargets());
   }
 
 }

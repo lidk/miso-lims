@@ -1,7 +1,6 @@
 package uk.ac.bbsrc.tgac.miso.service.impl;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -99,11 +98,6 @@ public class DefaultQualityControlService implements QualityControlService {
     QualityControlEntity entity = getHandler(target).getEntity(ownerId);
     authorizationManager.throwIfNotReadable(entity);
     return entity;
-  }
-
-  @Override
-  public Collection<QcTarget> listQcTargets() throws IOException {
-    return Arrays.asList(QcTarget.values());
   }
 
   private QcTargetStore getHandler(QcTarget target) {

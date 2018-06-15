@@ -32,6 +32,4 @@ public interface QualityControlService {
 
   QC updateQc(QC qc) throws IOException;
 
-  Collection<QcTarget> listQcTargets() throws IOException;
-
 }

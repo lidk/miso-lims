@@ -13,7 +13,7 @@ HotTarget.qctype = {
         validator: HotUtils.validator.requiredText
       }), HotUtils.makeColumnForText('Description', true, 'description', {
         unpackAfterSave: true,
-      }), HotUtils.makeColumnForEnum('Target', true, true, 'qcTarget', config.qcTargets, null),
+      }), HotUtils.makeColumnForEnum('Target', create, true, 'qcTarget', Constants.qcTargets, null),
       HotUtils.makeColumnForText('Units', true, 'units', {
         unpackAfterSave: true,
       }), HotUtils.makeColumnForInt('Precision After Decimal', true, 'precisionAfterDecimal', HotUtils.validator.requiredPositiveInt),
