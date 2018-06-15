@@ -51,6 +51,7 @@ public class LibraryDto extends AbstractBoxableDto implements WritableUrls {
   private SampleDto sample;
   private String receivedDate;
   private String sampleBoxPositionLabel;
+  private String defaultTargetedSequencing;
 
   public String getAlias() {
     return alias;
@@ -344,5 +345,13 @@ public class LibraryDto extends AbstractBoxableDto implements WritableUrls {
   @Override
   public void writeUrls(URI baseUri) {
     setUrl(WritableUrls.buildUriPath(baseUri, "/rest/library/{id}", getId()));
+  }
+
+  public String getDefaultTargetedSequencing() {
+    return defaultTargetedSequencing;
+  }
+
+  public void setDefaultTargetedSequencing(String defaultTargetedSequencing) {
+    this.defaultTargetedSequencing = defaultTargetedSequencing;
   }
 }

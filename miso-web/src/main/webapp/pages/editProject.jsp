@@ -132,6 +132,14 @@
         </form:select>
     </td>
   </tr>
+  <tr>
+    <td>Targeted Sequencing :*</td>
+    <td>
+        <form:select id="targetedSequencing" path="targetedSequencing">
+            <form:options items="${targetedSequencing}" itemValue="id" itemLabel="alias"/>
+        </form:select>
+    </td>
+  </tr>
 </table>
 
 <script type="text/javascript">

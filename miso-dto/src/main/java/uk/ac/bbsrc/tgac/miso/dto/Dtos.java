@@ -1106,6 +1106,9 @@ public class Dtos {
     if (from.getReceivedDate() != null) {
       dto.setReceivedDate(formatDate(from.getReceivedDate()));
     }
+    if (from.getSample().getProject().getTargetedSequencing() != null) {
+      dto.setDefaultTargetedSequencing(from.getSample().getProject().getTargetedSequencing().getAlias());
+    }
     return dto;
   }
 

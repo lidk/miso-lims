@@ -76,8 +76,13 @@ HotTarget.dilution = {
               return dil.library.libraryDesignCodeId == code.id;
             }, Constants.libraryDesignCodes);
             if (Utils.array.maybeGetProperty(designCode, 'targetedSequencingRequired')) {
-              setCellMeta('validator', HotUtils.validator.requiredAutocompleteWithNullValue('(None)'));
-              missingValueString = '';
+              setCellMeta('validator', HotUtils.validator.requiredAutocomplete);
+              console.log(dil.library.defaultTargetedSequencing);
+              if(dil.library.defaultTargetedSequencing != null){
+                missingValueString = dil.library.defaultTargetedSequencing;
+              } else {
+                missingValueString = '';
+              }
             } else {
               setCellMeta('validator', HotUtils.validator.permitEmptyDropdown);
               missingValueString = '(None)';
